@@ -1,6 +1,6 @@
 /*
  * Copy the RFID card data into variables and then 
- * scan the second empty card to copy all the date
+ * scan the second empty card to copy all the data
  * ----------------------------------------------------------------------------
  * Example sketch/program which will try the most used default keys listed in 
  * https://code.google.com/p/mfcuk/wiki/MifareClassicDefaultKeys to dump the
@@ -9,7 +9,7 @@
  * Typical pin layout used:
  * -----------------------------------------------------------------------------------------
  *             MFRC522      Arduino       Arduino   Arduino    Arduino          Arduino
- *             Reader/PCD   Uno           Mega      Nano v3    Leonardo/Micro   Pro Micro
+ *             Reader/PCD   Uno/101       Mega      Nano v3    Leonardo/Micro   Pro Micro
  * Signal      Pin          Pin           Pin       Pin        Pin              Pin
  * -----------------------------------------------------------------------------------------
  * RST/Reset   RST          9             5         D9         RESET/ICSP-5     RST
@@ -17,6 +17,8 @@
  * SPI MOSI    MOSI         11 / ICSP-4   51        D11        ICSP-4           16
  * SPI MISO    MISO         12 / ICSP-1   50        D12        ICSP-1           14
  * SPI SCK     SCK          13 / ICSP-3   52        D13        ICSP-3           15
+ *
+ * More pin layouts for other boards can be found here: https://github.com/miguelbalboa/rfid#pin-layout
  *
  */
 
@@ -93,9 +95,9 @@ void dump_byte_array1(byte *buffer, byte bufferSize) {
  * @return true when the given key worked, false otherwise.
  */
  
-boolean try_key(MFRC522::MIFARE_Key *key)
+bool try_key(MFRC522::MIFARE_Key *key)
 {
-    boolean result = false;
+    bool result = false;
     
     for(byte block = 0; block < 64; block++){
       
