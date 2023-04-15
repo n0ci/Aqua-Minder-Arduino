@@ -1,15 +1,15 @@
 #ifndef WEATHER_H
 #define WEATHER_H
 
-#include <dht_nonblocking.h>
+#include <DHT.h>
 
-#define DHT_SENSOR_TYPE DHT_TYPE_11
+#define DHT_SENSOR_TYPE DHT11
 #define DHT_SENSOR_PIN 2
 
 class Weather
 {
 private:
-  DHT_nonblocking dht_sensor;
+  DHT dht_sensor;
   float temperature;
   float humidity;
   unsigned long measurement_timestamp;

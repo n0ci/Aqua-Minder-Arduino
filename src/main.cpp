@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include "RFIDLogin.h"
-#include <dht_nonblocking.h>
 #include "Weather.h"
 
 RFIDLogin rfidLogin(9, 10);
