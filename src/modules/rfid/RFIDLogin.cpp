@@ -3,7 +3,6 @@
 RFIDLogin::RFIDLogin(int rstPin, int ssPin) : mfrc522(ssPin, rstPin), num_users(0) {}
 
 void RFIDLogin::begin() {
-  Serial.begin(9600);
   while (!Serial);
   SPI.begin();
   mfrc522.PCD_Init();
