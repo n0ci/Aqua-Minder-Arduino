@@ -4,7 +4,7 @@
 #include <DHT.h>
 
 #define DHT_SENSOR_TYPE DHT11
-#define DHT_SENSOR_PIN 2
+#define DHT_SENSOR_PIN 4
 
 class Weather
 {
