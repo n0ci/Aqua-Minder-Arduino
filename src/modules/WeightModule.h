@@ -7,7 +7,7 @@ class WeightModule {
   private:
     Hx711Sensor hx711Sensor;
     float lastWeight;
-    float percentThreshold;
+    float absoluteThreshold;
     
   public:
     WeightModule(uint8_t dataPin, uint8_t clockPin, float percentThreshold);
