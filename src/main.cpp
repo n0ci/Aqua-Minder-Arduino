@@ -3,7 +3,7 @@
 #include "Weather.h"
 
 RFIDLogin rfidLogin(9, 10);
-Weather weather;
+Weather weather(4, DHT11);
 
 void setup()
 {

@@ -1,6 +1,6 @@
 #include "weather.h"
 
-Weather::Weather() : dht_sensor(DHT_SENSOR_PIN, DHT_SENSOR_TYPE), temperature(0), humidity(0), measurement_timestamp(0)
+Weather::Weather(int pin, int type) : dht_sensor(pin, type), temperature(0), humidity(0), measurement_timestamp(0)
 {
   dht_sensor.begin();
 }

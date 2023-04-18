@@ -3,11 +3,12 @@
 
 #include <DHT.h>
 
-#define DHT_SENSOR_TYPE DHT11
-#define DHT_SENSOR_PIN 4
-
 class Weather
 {
+public:
+  Weather(int pin, int type);
+  void update();
+
 private:
   DHT dht_sensor;
   float temperature;
@@ -15,10 +16,6 @@ private:
   unsigned long measurement_timestamp;
 
   bool measure_environment();
-
-public:
-  Weather();
-  void update();
 };
 
 #endif
