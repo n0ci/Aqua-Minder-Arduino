@@ -7,7 +7,7 @@
 LoginModule loginModule(9, 10);
 
 // Set up the weather module with the DHT11 sensor on pin 4
-WeatherModule weatherModule(4, DHT11);
+WeatherModule weatherModule(4, DHT11, 0.2, 0.1);
 
 // Set up the weight module with the HX711 sensor on pins 3 and 2
 WeightModule weightModule(3, 2, 1.0);

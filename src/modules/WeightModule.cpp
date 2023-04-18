@@ -1,7 +1,7 @@
 #include "WeightModule.h"
 
 WeightModule::WeightModule(uint8_t dataPin, uint8_t clockPin, float absoluteThreshold) 
-  : hx711Sensor(dataPin, clockPin, 407.22), lastWeight(0), absoluteThreshold(absoluteThreshold){}
+  : hx711Sensor(dataPin, clockPin, 407.22), lastWeight(0), weightThreshold(absoluteThreshold){}
 
 void WeightModule::begin() {
   hx711Sensor.begin();
@@ -23,7 +23,7 @@ void WeightModule::update() {
 void WeightModule::printIfChanged(float weight) {
   float absoluteChange = abs(weight - lastWeight);
   lastWeight = weight;
-  if (absoluteChange > absoluteThreshold) {
+  if (absoluteChange > weightThreshold) {
     Serial.print(F("Weight: "));
     Serial.print(weight, 2);
     Serial.println(F(" g"));

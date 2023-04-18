@@ -2,7 +2,6 @@
 #define Hx711Sensor_h
 
 #include <HX711_ADC.h>
-#include <EEPROM.h>
 
 class Hx711Sensor {
   private:
