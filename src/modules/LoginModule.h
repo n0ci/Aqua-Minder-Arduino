@@ -15,13 +15,14 @@ private:
   User users[10];
   int num_users;
 
-public:
-  LoginModule(int rstPin, int ssPin);
-  void begin();
   int findUser(byte *uid);
   int registerUser(byte *uid);
   int scanCard();
+
+public:
+  LoginModule(int rstPin, int ssPin);
   void update();
+  void begin();
 };
 
 #endif

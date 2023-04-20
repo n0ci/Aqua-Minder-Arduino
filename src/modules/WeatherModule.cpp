@@ -1,8 +1,7 @@
 #include "WeatherModule.h"
 
-WeatherModule::WeatherModule(int pin, int type, float tempThreshold, float humThreshold) : 
-  dhtSensor(pin, type), temperature(0), humidity(0), measurement_timestamp(0), 
-  tempThreshold(tempThreshold), humThreshold(humThreshold), lastTemperature(0), lastHumidity(0)
+WeatherModule::WeatherModule(int pin, int type, float tempThreshold, float humThreshold) : dhtSensor(pin, type), temperature(0), humidity(0), measurement_timestamp(0),
+                                                                                           tempThreshold(tempThreshold), humThreshold(humThreshold), lastTemperature(0), lastHumidity(0)
 {
 }
 
