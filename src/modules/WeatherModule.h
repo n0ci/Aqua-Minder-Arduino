@@ -2,29 +2,20 @@
 #define WeatherModule_h
 
 #include "sensors/DhtSensor.h"
+#include "Module.h"
 
-class WeatherModule
+class WeatherModule : public Module
 {
 private:
   DhtSensor dhtSensor;
-  float temperature;
-  float humidity;
-
-  float lastTemperature;
-  float lastHumidity;
-
-  float tempThreshold;
-  float humThreshold;
-
-  unsigned long measurement_timestamp;
-  void printTemperatureIfChanged(float temperature, float tempThreshold);
-  void printHumidityIfChanged(float humidity, float humThreshold);
-  bool measureEnvironment();
+  float temperature = -1;
+  float humidity = -1;
 
 public:
-  WeatherModule(int pin, int type, float tempThreshold, float humThreshold);
+  WeatherModule(int pin, int type);
   void begin();
   void update();
+  String getData();
 };
 
 #endif

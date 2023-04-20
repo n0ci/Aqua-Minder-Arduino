@@ -1,6 +1,6 @@
 #include "Hx711Sensor.h"
 
-Hx711Sensor::Hx711Sensor(uint8_t dataPin, uint8_t clockPin, float calibrationFactor) : loadCell(dataPin, clockPin)
+Hx711Sensor::Hx711Sensor(int dataPin, int clockPin, float calibrationFactor) : loadCell(dataPin, clockPin)
 {
     setCalibrationFactor(calibrationFactor);
 }

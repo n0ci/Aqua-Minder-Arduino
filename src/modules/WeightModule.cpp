@@ -1,16 +1,14 @@
 #include "WeightModule.h"
 
-WeightModule::WeightModule(uint8_t dataPin, uint8_t clockPin, float absoluteThreshold)
-    : hx711Sensor(dataPin, clockPin, 407.22), lastWeight(0), weightThreshold(absoluteThreshold) {}
+WeightModule::WeightModule(uint8_t dataPin, uint8_t clockPin)
+    : hx711Sensor(dataPin, clockPin, 407.22)
+{
+  // TODO: make calibration factor configurable
+}
 
 void WeightModule::begin()
 {
   hx711Sensor.begin();
-}
-
-float WeightModule::readWeight()
-{
-  return hx711Sensor.readWeight();
 }
 
 void WeightModule::tare()
@@ -20,18 +18,14 @@ void WeightModule::tare()
 
 void WeightModule::update()
 {
-  float weight = readWeight();
-  printIfChanged(weight);
+  weight = hx711Sensor.readWeight();
 }
 
-void WeightModule::printIfChanged(float weight)
+String WeightModule::getData()
 {
-  float absoluteChange = abs(weight - lastWeight);
-  lastWeight = weight;
-  if (absoluteChange > weightThreshold)
-  {
-    Serial.print(F("Weight: "));
-    Serial.print(weight, 2);
-    Serial.println(F(" g"));
-  }
+  StaticJsonDocument<200> doc;
+  doc["weight"] = weight;
+  String json;
+  serializeJson(doc, json);
+  return json;
 }

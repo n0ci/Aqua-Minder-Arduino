@@ -9,7 +9,7 @@ private:
   HX711_ADC loadCell;
 
 public:
-  Hx711Sensor(uint8_t dataPin, uint8_t clockPin, float calibrationFactor);
+  Hx711Sensor(int dataPin, int clockPin, float calibrationFactor);
   void begin();
   void setCalibrationFactor(float factor);
   float readWeight();

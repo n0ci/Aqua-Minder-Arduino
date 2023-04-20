@@ -9,21 +9,21 @@ void RfidSensor::begin()
     Serial.println("RFID sensor initialized");
 }
 
-byte *RfidSensor::readUid()
+int RfidSensor::readUid()
 {
-    static byte uid[4] = {0};
+    int uid = -1;
 
     if (!mfrc522.PICC_IsNewCardPresent())
     {
-        return NULL;
+        return -1;
     }
 
     if (!mfrc522.PICC_ReadCardSerial())
     {
-        return NULL;
+        return -1;
     }
 
-    memcpy(uid, mfrc522.uid.uidByte, 4);
+    uid = (int)mfrc522.uid.uidByte;
 
     mfrc522.PICC_HaltA();
     mfrc522.PCD_StopCrypto1();

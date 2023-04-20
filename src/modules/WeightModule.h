@@ -2,24 +2,23 @@
 #define WeightModule_h
 
 #include "sensors/Hx711Sensor.h"
+#include "Module.h"
 
-class WeightModule
+class WeightModule : public Module
 {
 private:
   Hx711Sensor hx711Sensor;
-  float lastWeight;
-  float weightThreshold;
+  float weight = -1;
 
-  void setCalibrationFactor(float factor);
   float readWeight();
-  void tare();
   void calibrate();
-  void printIfChanged(float weight);
+  void tare();
 
 public:
-  WeightModule(uint8_t dataPin, uint8_t clockPin, float weightThreshold);
+  WeightModule(uint8_t dataPin, uint8_t clockPin);
   void begin();
   void update();
+  String getData();
 };
 
 #endif
