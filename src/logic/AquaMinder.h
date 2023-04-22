@@ -1,29 +1,57 @@
 #ifndef AquaMinder_h
 #define AquaMinder_h
 
-#define USER_COUNT 10
 #include "entities/User.h"
+#include "modules/Module.h"
 
 class AquaMinder
 {
+private:
     enum State
     {
+        INIT,
         IDLE,
         LOGIN,
         LOGOUT,
         DRINKING,
-        DRANK
+        DRANK,
+        DATA_IDENTITY,
+        DATA_WEATHER,
+        DATA_WEIGHT,
+        ERROR
     };
 
-private:
-    User users[USER_COUNT];
+    enum RequestType
+    {
+        IDENTITY,
+        WEATHER,
+        WEIGHT
+    };
+
+    State state = INIT;
+
+    Module *modules;
+    int moduleCount;
+    User *users;
+    int userCount;
+
     User *currentUser = NULL;
-    State state = IDLE;
+
+    void updateModules();
+    void initializeModules();
+    void login();
+    void logout();
+    void drink();
+    void drank();
+    void dataIdentity();
+    void dataWeather();
+    void dataWeight();
+    void error();
 
 public:
-    AquaMinder();
-    User *getCurrentUser();
-    State changeState(State newState);
+    AquaMinder(Module *modules, int moduleCount, User *users, int userCount);
+    void update();
+    void notify(int requestType);
 };
 
 #endif
