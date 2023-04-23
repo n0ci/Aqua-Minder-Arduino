@@ -41,10 +41,11 @@ private:
     User *currentUser = NULL;
     void initializeModules();
     void updateModules();
-    int checkIfUserChanged();
+    String getUser(String uid);
+    String registerNewUser(String uid);
 
-    void updateCurrentUser(int uid);
-    void updateCurrentUserWeight();
+    void
+    updateCurrentUserWeight();
 
     void changeState(State newState);
 

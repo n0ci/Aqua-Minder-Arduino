@@ -1,6 +1,7 @@
 #include "AquaMinder.h"
 
-AquaMinder::AquaMinder(IdentityModule id, WeightModule weight, WeatherModule weather, User *users, int userCount) : identityModule(id), weightModule(weight), weatherModule(weather), users(users), userCount(userCount)
+AquaMinder::AquaMinder(IdentityModule id, WeightModule weight, WeatherModule weather, User *users, int userCount)
+    : identityModule(id), weightModule(weight), weatherModule(weather), users(users), userCount(userCount)
 {
 }
 
@@ -13,28 +14,28 @@ void AquaMinder::update()
         initializeModules();
         changeState(IDLE);
     }
-    // Fall through to IDLE
+    break;
     case IDLE:
     {
         updateModules();
         changeState(UPDATE_USER);
     }
-    // Fall through to UPDATE_USER
+    break;
     case UPDATE_USER:
     {
-        int uid = checkIfUserChanged();
-        if (uid != -1)
+        String uid = getKeyFromJson(identityModule.getData(), "uid");
+        if (getUser(uid) == "")
         {
-            Serial.println("User changed");
-            updateCurrentUser(uid);
+            registerNewUser(uid);
         }
-        // changeState(UPDATE_WEIGHT);
+        changeState(UPDATE_WEIGHT);
         break;
     }
-    // Fall through to UPDATE_WEIGHT
     case UPDATE_WEIGHT:
     {
         currentUser->update(getKeyFromJson(weightModule.getData(), "weight").toFloat());
+
+        Serial.println(currentUser->getDrankWeight());
         changeState(IDLE);
         break;
     }
@@ -81,30 +82,6 @@ void AquaMinder::updateModules()
     weatherModule.update();
 }
 
-int AquaMinder::checkIfUserChanged()
-{
-    int newUid = getKeyFromJson(identityModule.getData(), "uid").toInt();
-    if (currentUser->getUid() != newUid)
-    {
-        return newUid;
-    }
-    return -1;
-}
-
-void AquaMinder::updateCurrentUser(int newUid)
-{
-    currentUser = NULL;
-    for (int i = 0; i < userCount; i++)
-    {
-        if (users[i].getUid() == newUid)
-        {
-            // Found the user, set it as the current user
-            currentUser = &users[i];
-            return;
-        }
-    }
-}
-
 void AquaMinder::notify(int requestType)
 {
     switch (requestType)
@@ -121,6 +98,42 @@ void AquaMinder::notify(int requestType)
     default:
         break;
     }
+}
+
+String AquaMinder::getUser(String uid)
+{
+    for (int i = 0; i < userCount; i++)
+    {
+        if (users[i].getUid().compareTo(uid) == 0 && users[i].getUid().compareTo("") != 0)
+        {
+            currentUser = &users[i];
+            Serial.print("Found user: ");
+            Serial.println(currentUser->getUid());
+            return currentUser->getUid();
+        }
+    }
+    return "";
+}
+
+String AquaMinder::registerNewUser(String uid)
+{
+    if (uid.compareTo("") == 0)
+    {
+        return "";
+    }
+
+    for (int i = 0; i < userCount; i++)
+    {
+        if (users[i].getUid().compareTo("") == 0)
+        {
+            users[i].setUid(uid);
+            currentUser = &users[i];
+            Serial.print("Registered new user: ");
+            Serial.println(currentUser->getUid());
+            return currentUser->getUid();
+        }
+    }
+    return "";
 }
 
 String AquaMinder::getKeyFromJson(String json, String key)
@@ -151,6 +164,6 @@ void AquaMinder::changeState(State newState)
         return;
     }
     state = newState;
-    // Serial.print("STATE: ");
-    // Serial.println(state);
+    Serial.print("STATE: ");
+    Serial.println(state);
 }

@@ -1,10 +1,15 @@
 #include "User.h"
 
-User::User(int uid) : uid(uid)
+User::User()
 {
 }
 
-int User::getUid()
+void User::setUid(String uid)
+{
+    this->uid = uid;
+}
+
+String User::getUid()
 {
     return uid;
 }

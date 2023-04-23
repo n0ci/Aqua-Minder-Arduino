@@ -9,7 +9,7 @@ void Hx711Sensor::begin()
 {
     loadCell.begin();
     loadCell.start(1000, true);
-    Serial.println("DHT sensor initialized");
+    Serial.println("Hx711 sensor initialized");
 }
 
 float Hx711Sensor::readWeight()

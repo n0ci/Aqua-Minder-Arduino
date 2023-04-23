@@ -12,7 +12,7 @@ private:
 public:
     RfidSensor(int rstPin, int ssPin);
     void begin();
-    int readUid();
+    String readUid();
 };
 
 #endif

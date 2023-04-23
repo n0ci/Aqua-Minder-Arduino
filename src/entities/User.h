@@ -7,7 +7,7 @@
 class User
 {
 private:
-    int uid = 1;
+    String uid = "";
 
     float weight = 0;
     float validWeight = 0;
@@ -18,8 +18,10 @@ private:
     const int bottleWeight = 20;
 
 public:
-    User(int uid);
-    int getUid();
+    User();
+    String getUid();
+    void setUid(String uid);
+
     float getDrankWeight();
 
     String getDrankWeightJson();

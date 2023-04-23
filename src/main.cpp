@@ -7,7 +7,7 @@
 #define USER_COUNT 5
 
 // Set up the users
-User users[USER_COUNT] = {User(1), User(2), User(3), User(4), User(5)};
+User users[USER_COUNT] = {User(), User(), User(), User(), User()};
 
 // Set up the logic
 AquaMinder aquaMinder(IdentityModule(9, 10), WeightModule(3, 2), WeatherModule(4, DHT11), users, USER_COUNT);
