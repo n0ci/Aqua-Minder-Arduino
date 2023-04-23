@@ -9,7 +9,7 @@ void Hx711Sensor::begin()
 {
     loadCell.begin();
     loadCell.start(1000, true);
-    Serial.println("DHT sensor initialized");
+    Serial.println("Hx711 sensor initialized");
 }
 
 float Hx711Sensor::readWeight()
@@ -27,9 +27,20 @@ float Hx711Sensor::readWeight()
         newDataReady = 0;
         return i;
     }
+    return -1;
 }
 
 void Hx711Sensor::setCalibrationFactor(float factor)
 {
     loadCell.setCalFactor(factor);
+}
+
+float Hx711Sensor::getCalibrationFactor(float knownMass)
+{
+    return loadCell.getNewCalibration(knownMass);
+}
+
+void Hx711Sensor::tare()
+{
+    loadCell.tare();
 }

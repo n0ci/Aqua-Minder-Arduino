@@ -12,8 +12,9 @@ public:
   Hx711Sensor(int dataPin, int clockPin, float calibrationFactor);
   void begin();
   void setCalibrationFactor(float factor);
-  float readWeight();
+  float getCalibrationFactor(float knownMass);
   void tare();
+  float readWeight();
 };
 
 #endif

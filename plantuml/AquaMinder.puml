@@ -1,0 +1,57 @@
+@startuml title AquaMinder State Machine Diagram
+
+state main {
+    [*] --> setup
+    setup --> loop : default
+    setup : begin(9600)
+    loop --> AquaMinder : on update/notify
+    loop : aquaMinder.notify(Serial.read());
+    loop : aquaMinder.update()
+
+    state AquaMinder {
+        [*] --> INIT : update()
+        INIT : // Initialize the system and modules
+        INIT : initializeModules()
+        INIT --> IDLE : on init complete
+
+        state IDLE {
+            [*] --> UPDATE_USER : default
+            IDLE : // Update the system and modules
+            IDLE : updateModules()
+            IDLE --> UPDATE_WEIGHT : weight change
+            IDLE --> LOGOUT : manual/day change
+        }
+
+        state UPDATE_USER {
+            [*] --> TARE : new user
+            UPDATE_USER : // Update the current user profile
+            UPDATE_USER : updateCurrentUser()
+        }
+
+        state TARE {
+            [*] --> IDLE : tare complete
+            TARE : // Tare the scale to zero
+            TARE : tareScale()
+        }
+
+        state UPDATE_WEIGHT {
+            [*] --> FILL : positive change
+            [*] --> DRINK : negative change
+            UPDATE_WEIGHT : // Update the current weight of the container
+            UPDATE_WEIGHT : updateCurrentWeight()
+        }
+
+        state FILL {
+            [*] --> IDLE : fill complete
+        }
+
+        state DRINK {
+            [*] --> IDLE : drink complete
+        }
+
+        state LOGOUT {
+            [*] --> IDLE : logout/day change complete
+        }
+    }   
+}
+@enduml

@@ -2,7 +2,11 @@
 #define AquaMinder_h
 
 #include "entities/User.h"
-#include "modules/Module.h"
+#include "modules/WeightModule.h"
+#include "modules/IdentityModule.h"
+#include "modules/WeatherModule.h"
+#include "modules/WeightModule.h"
+#include <ArduinoJson.h>
 
 class AquaMinder
 {
@@ -11,14 +15,11 @@ private:
     {
         INIT,
         IDLE,
-        LOGIN,
-        LOGOUT,
-        DRINKING,
-        DRANK,
+        UPDATE_USER,
+        UPDATE_WEIGHT,
         DATA_IDENTITY,
         DATA_WEATHER,
-        DATA_WEIGHT,
-        ERROR
+        DATA_WEIGHT
     };
 
     enum RequestType
@@ -30,26 +31,28 @@ private:
 
     State state = INIT;
 
-    Module *modules;
-    int moduleCount;
+    IdentityModule identityModule;
+    WeightModule weightModule;
+    WeatherModule weatherModule;
+
     User *users;
     int userCount;
 
     User *currentUser = NULL;
-
-    void updateModules();
     void initializeModules();
-    void login();
-    void logout();
-    void drink();
-    void drank();
-    void dataIdentity();
-    void dataWeather();
-    void dataWeight();
-    void error();
+    void updateModules();
+    String getUser(String uid);
+    String registerNewUser(String uid);
+
+    void
+    updateCurrentUserWeight();
+
+    void changeState(State newState);
+
+    String getKeyFromJson(String json, String key);
 
 public:
-    AquaMinder(Module *modules, int moduleCount, User *users, int userCount);
+    AquaMinder(IdentityModule identityModule, WeightModule weightModule, WeatherModule weatherModule, User *users, int userCount);
     void update();
     void notify(int requestType);
 };

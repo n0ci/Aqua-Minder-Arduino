@@ -7,23 +7,27 @@
 class User
 {
 private:
-    int uid;
-    float tareWeight = 0;
-    float lastWeight = 0;
+    String uid = "";
+
+    float weight = 0;
+    float validWeight = 0;
     float drankWeight = 0;
-    float calibrationFactor = 0;
+    unsigned long lastWeightUpdate = 0;
+
+    const int toleranceWeight = 10;
+    const int bottleWeight = 20;
 
 public:
-    User(int uid, float tareWeight, float calibrationFactor);
-    int getUid();
-    String getUidJson();
-    float getDrankWeight();
-    String getDrankWeightJson();
+    User();
+    String getUid();
+    void setUid(String uid);
 
-    void setTareWeight(float tareWeight);
-    void setLastWeight(float lastWeight);
-    void setDrankWeight(float drankWeight);
-    void setCalibrationFactor(float calibrationFactor);
+    float getDrankWeight();
+
+    String getDrankWeightJson();
+    String getUidJson();
+
+    void update(float newWeight);
 };
 
 #endif

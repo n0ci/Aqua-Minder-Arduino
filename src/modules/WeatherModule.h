@@ -1,10 +1,10 @@
 #ifndef WeatherModule_h
 #define WeatherModule_h
 
+#include <ArduinoJson.h>
 #include "sensors/DhtSensor.h"
-#include "Module.h"
 
-class WeatherModule : public Module
+class WeatherModule
 {
 private:
   DhtSensor dhtSensor;

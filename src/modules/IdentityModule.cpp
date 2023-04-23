@@ -11,11 +11,7 @@ void IdentityModule::begin()
 
 void IdentityModule::update()
 {
-  int uid = (int)rfidSensor.readUid();
-  if (uid == NULL)
-  {
-    uid = -1;
-  }
+  uid = rfidSensor.readUid();
 }
 
 String IdentityModule::getData()

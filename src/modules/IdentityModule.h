@@ -1,14 +1,14 @@
 #ifndef IdentityModule_h
 #define IdentityModule_h
 
+#include <ArduinoJson.h>
 #include "sensors/RfidSensor.h"
-#include "Module.h"
 
-class IdentityModule : public Module
+class IdentityModule
 {
 private:
   RfidSensor rfidSensor;
-  int uid;
+  String uid;
   int scanCard();
 
 public:
