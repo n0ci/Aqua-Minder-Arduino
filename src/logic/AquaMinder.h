@@ -5,7 +5,6 @@
 #include "modules/WeightModule.h"
 #include "modules/IdentityModule.h"
 #include "modules/WeatherModule.h"
-#include "modules/WeightModule.h"
 #include <ArduinoJson.h>
 
 class AquaMinder
@@ -38,23 +37,20 @@ private:
     User *users;
     int userCount;
 
-    User *currentUser = NULL;
+    User *currentUser = nullptr;
+
     void initializeModules();
     void updateModules();
-    String getUser(String uid);
-    String registerNewUser(String uid);
-
-    void
-    updateCurrentUserWeight();
-
+    String getUser(const String &uid);
+    String registerNewUser(const String &uid);
+    void updateCurrentUserWeight();
     void changeState(State newState);
-
-    String getKeyFromJson(String json, String key);
+    String getKeyFromJson(const String &json, const String &key);
 
 public:
-    AquaMinder(IdentityModule identityModule, WeightModule weightModule, WeatherModule weatherModule, User *users, int userCount);
+    AquaMinder(IdentityModule id, WeightModule weight, WeatherModule weather, User *users, int userCount);
     void update();
-    void notify(int requestType);
+    void notify(RequestType requestType);
 };
 
 #endif

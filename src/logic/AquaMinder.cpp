@@ -10,17 +10,13 @@ void AquaMinder::update()
     switch (state)
     {
     case INIT:
-    {
         initializeModules();
         changeState(IDLE);
         break;
-    }
     case IDLE:
-    {
         updateModules();
         changeState(UPDATE_USER);
         break;
-    }
     case UPDATE_USER:
     {
         String uid = getKeyFromJson(identityModule.getData(), "uid");
@@ -29,37 +25,29 @@ void AquaMinder::update()
             registerNewUser(uid);
         }
         changeState(UPDATE_WEIGHT);
-        break;
     }
+    break;
     case UPDATE_WEIGHT:
     {
         currentUser->update(getKeyFromJson(weightModule.getData(), "weight").toFloat());
         changeState(IDLE);
-        break;
     }
+    break;
     case DATA_IDENTITY:
-    {
         Serial.println(currentUser->getUidJson());
         changeState(IDLE);
         break;
-    }
     case DATA_WEATHER:
-    {
         Serial.println(weatherModule.getData());
         changeState(IDLE);
         break;
-    }
     case DATA_WEIGHT:
-    {
         Serial.println(currentUser->getDrankWeightJson());
         changeState(IDLE);
         break;
-    }
     default: // Should never happen
-    {
         Serial.println("ERROR: Invalid state");
         break;
-    }
     }
 }
 
@@ -82,35 +70,29 @@ void AquaMinder::updateModules()
     weatherModule.update();
 }
 
-void AquaMinder::notify(int requestType)
+void AquaMinder::notify(RequestType requestType)
 {
     switch (requestType)
     {
     case IDENTITY:
-    {
         changeState(DATA_IDENTITY);
         break;
-    }
     case WEATHER:
-    {
         changeState(DATA_WEATHER);
         break;
-    }
     case WEIGHT:
-    {
         changeState(DATA_WEIGHT);
         break;
-    }
     default:
         break;
     }
 }
 
-String AquaMinder::getUser(String uid)
+String AquaMinder::getUser(const String &uid)
 {
     for (int i = 0; i < userCount; i++)
     {
-        if (users[i].getUid().compareTo(uid) == 0 && users[i].getUid().compareTo("") != 0)
+        if (users[i].getUid() == uid && uid.compareTo("") != 0)
         {
             currentUser = &users[i];
             Serial.print("Found user: ");
@@ -121,7 +103,7 @@ String AquaMinder::getUser(String uid)
     return "";
 }
 
-String AquaMinder::registerNewUser(String uid)
+String AquaMinder::registerNewUser(const String &uid)
 {
     if (uid.compareTo("") == 0)
     {
@@ -142,7 +124,7 @@ String AquaMinder::registerNewUser(String uid)
     return "";
 }
 
-String AquaMinder::getKeyFromJson(String json, String key)
+String AquaMinder::getKeyFromJson(const String &json, const String &key)
 {
     // Allocate the JSON document
     StaticJsonDocument<200> doc;
@@ -154,7 +136,7 @@ String AquaMinder::getKeyFromJson(String json, String key)
     if (error)
     {
         Serial.print(F("deserializeJson() failed: "));
-        Serial.println(error.f_str());
+        Serial.println(error.c_str());
         return "";
     }
     else
