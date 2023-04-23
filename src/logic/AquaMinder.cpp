@@ -13,14 +13,14 @@ void AquaMinder::update()
     {
         initializeModules();
         changeState(IDLE);
+        break;
     }
-    break;
     case IDLE:
     {
         updateModules();
         changeState(UPDATE_USER);
+        break;
     }
-    break;
     case UPDATE_USER:
     {
         String uid = getKeyFromJson(identityModule.getData(), "uid");
@@ -34,8 +34,6 @@ void AquaMinder::update()
     case UPDATE_WEIGHT:
     {
         currentUser->update(getKeyFromJson(weightModule.getData(), "weight").toFloat());
-
-        Serial.println(currentUser->getDrankWeight());
         changeState(IDLE);
         break;
     }
@@ -58,8 +56,10 @@ void AquaMinder::update()
         break;
     }
     default: // Should never happen
+    {
         Serial.println("ERROR: Invalid state");
         break;
+    }
     }
 }
 
@@ -87,14 +87,20 @@ void AquaMinder::notify(int requestType)
     switch (requestType)
     {
     case IDENTITY:
-        state = DATA_IDENTITY;
+    {
+        changeState(DATA_IDENTITY);
         break;
+    }
     case WEATHER:
-        state = DATA_WEATHER;
+    {
+        changeState(DATA_WEATHER);
         break;
+    }
     case WEIGHT:
-        state = DATA_WEIGHT;
+    {
+        changeState(DATA_WEIGHT);
         break;
+    }
     default:
         break;
     }
@@ -164,6 +170,7 @@ void AquaMinder::changeState(State newState)
         return;
     }
     state = newState;
-    Serial.print("STATE: ");
-    Serial.println(state);
+
+    // Wait for the state to change
+    __asm__("nop\n\t");
 }

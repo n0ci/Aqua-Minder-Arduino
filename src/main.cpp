@@ -15,13 +15,18 @@ AquaMinder aquaMinder(IdentityModule(9, 10), WeightModule(3, 2), WeatherModule(4
 void setup()
 {
   // Initialize serial communication
-  Serial.begin(9600);
+  Serial.begin(115200);
 }
 
 void loop()
 {
   // Update the logic and thus modules
   aquaMinder.update();
-  // Send the data to the unity application on request
-  aquaMinder.notify(Serial.read());
+
+  // Send the data to the unity application on available request
+  if (Serial.available() > 0)
+  {
+    int input = Serial.readStringUntil('\n').toInt();
+    aquaMinder.notify(input);
+  }
 }
