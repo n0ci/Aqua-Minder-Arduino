@@ -12,9 +12,10 @@ void IdentityModule::begin()
 void IdentityModule::update()
 {
   int uid = (int)rfidSensor.readUid();
-  if (uid == NULL)
+  if (uid != -1)
   {
-    uid = -1;
+    Serial.println("******");
+    Serial.println(uid);
   }
 }
 

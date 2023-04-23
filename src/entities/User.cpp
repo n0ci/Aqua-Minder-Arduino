@@ -1,8 +1,17 @@
 #include "User.h"
 
-User::User(int uid, float tareWeight, float calibrationFactor)
-    : uid(uid), tareWeight(tareWeight), calibrationFactor(calibrationFactor)
+User::User(int uid) : uid(uid)
 {
+}
+
+int User::getUid()
+{
+    return uid;
+}
+
+float User::getDrankWeight()
+{
+    return drankWeight;
 }
 
 String User::getUidJson()
@@ -23,32 +32,45 @@ String User::getDrankWeightJson()
     return json;
 }
 
-int User::getUid()
+void User::update(float newWeight)
 {
-    return uid;
-}
+    // If lastWeightUpdate is 0, this is the first weight update in a while
+    if (lastWeightUpdate == 0)
+    {
+        lastWeightUpdate = millis();
+    }
 
-float User::getDrankWeight()
-{
-    return drankWeight;
-}
+    // Withdraw first few weight updates
+    if ((millis() - lastWeightUpdate) < 3000)
+    {
+        return;
+    }
+    else
+    {
+        lastWeightUpdate = 0;
+    }
 
-void User::setTareWeight(float tareWeight)
-{
-    this->tareWeight = tareWeight;
-}
+    // If the weight is less than bottleWeight, not a valid weight
+    if (newWeight < bottleWeight)
+    {
+        return;
+    }
 
-void User::setLastWeight(float lastWeight)
-{
-    this->lastWeight = lastWeight;
-}
-
-void User::setDrankWeight(float drankWeight)
-{
-    this->drankWeight = drankWeight;
-}
-
-void User::setCalibrationFactor(float calibrationFactor)
-{
-    this->calibrationFactor = calibrationFactor;
+    // If the weight is within the tolerance, the user hasn't drank anything
+    int diff = this->validWeight - newWeight;
+    if (abs(diff) < toleranceWeight)
+    {
+        return;
+    }
+    // If the diff is higher than the valid weight, the user has drank something
+    else if (diff > 0)
+    {
+        drankWeight += diff;
+        weight = newWeight;
+    }
+    // If the diff is lower than the valid weight, the user has filled the bottle
+    else if (diff < 0)
+    {
+        weight = newWeight;
+    }
 }

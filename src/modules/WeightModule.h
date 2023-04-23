@@ -2,9 +2,9 @@
 #define WeightModule_h
 
 #include "sensors/Hx711Sensor.h"
-#include "Module.h"
+#include <ArduinoJson.h>
 
-class WeightModule : public Module
+class WeightModule
 {
 private:
   Hx711Sensor hx711Sensor;
