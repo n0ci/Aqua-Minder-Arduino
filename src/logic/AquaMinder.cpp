@@ -60,7 +60,6 @@ void AquaMinder::initializeModules()
     weatherModule.begin();
 
     Serial.println("*** Ready! ***");
-    Serial.println();
 }
 
 void AquaMinder::updateModules()
