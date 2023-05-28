@@ -8,6 +8,7 @@ class RfidSensor
 {
 private:
     MFRC522 mfrc522;
+    String uidString;
 
 public:
     RfidSensor(int rstPin, int ssPin);

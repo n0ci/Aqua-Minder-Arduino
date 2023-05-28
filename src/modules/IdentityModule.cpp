@@ -12,13 +12,10 @@ void IdentityModule::begin()
 void IdentityModule::update()
 {
   uid = rfidSensor.readUid();
+  Serial.println(uid);
 }
 
 String IdentityModule::getData()
 {
-  StaticJsonDocument<200> doc;
-  doc["uid"] = uid;
-  String json;
-  serializeJson(doc, json);
-  return json;
+  return uid;
 }

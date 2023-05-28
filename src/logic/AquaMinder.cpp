@@ -28,6 +28,7 @@ void AquaMinder::notify(RequestType requestType)
     switch (requestType)
     {
     case IDENTITY:
+        identityModule.update();
         Serial.println(identityModule.getData());
         break;
     case WEATHER:
