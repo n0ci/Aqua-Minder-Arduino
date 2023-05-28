@@ -9,6 +9,9 @@ class WeightModule
 private:
   Hx711Sensor hx711Sensor;
   float weight = -1;
+  float threshold = 10;
+  int maxSmoothIterations = 10;
+  int smoothTime = 100;
 
   float readWeight();
   void calibrate();

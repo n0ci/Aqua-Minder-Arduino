@@ -1,7 +1,7 @@
 #include "WeightModule.h"
 
 WeightModule::WeightModule(uint8_t dataPin, uint8_t clockPin)
-    : hx711Sensor(dataPin, clockPin, 407.22)
+    : hx711Sensor(dataPin, clockPin, 400.5)
 {
   // TODO: make calibration factor configurable
 }
@@ -18,14 +18,21 @@ void WeightModule::tare()
 
 void WeightModule::update()
 {
-  weight = hx711Sensor.readWeight();
+  float currentWeight = 0;
+  int iterations = 0; 
+
+  do 
+  {
+    currentWeight = hx711Sensor.readWeight();
+    delay(smoothTime);
+    iterations++;
+  }
+  while (abs(currentWeight - weight) > threshold && iterations <= maxSmoothIterations);
+  
+  weight = currentWeight;
 }
 
 String WeightModule::getData()
 {
-  StaticJsonDocument<200> doc;
-  doc["weight"] = weight;
-  String json;
-  serializeJson(doc, json);
-  return json;
+  return String(weight);
 }

@@ -25,17 +25,20 @@ void AquaMinder::update()
 
 void AquaMinder::notify(RequestType requestType)
 {
+    weightModule.update();
+    identityModule.update();
+    weatherModule.update();
+
     switch (requestType)
     {
     case IDENTITY:
-        identityModule.update();
         Serial.println(identityModule.getData());
         break;
     case WEATHER:
-        weatherModule.update();
         Serial.println(weatherModule.getData());
         break;
     case WEIGHT:
+
         Serial.println(weightModule.getData());
         break;
     default:
