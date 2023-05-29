@@ -16,6 +16,8 @@ void setup()
 
 void loop()
 {
+  aquaMinder.update();
+  
   // Send the data to the unity application on available request
   if (Serial.available() > 0)
   {
