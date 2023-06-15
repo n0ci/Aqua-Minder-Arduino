@@ -8,7 +8,7 @@ class IdentityModule
 {
 private:
   RfidSensor rfidSensor;
-  String uid;
+  String uid = "noID";
   int scanCard();
 
 public:

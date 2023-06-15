@@ -13,12 +13,12 @@ void RfidSensor::begin()
 
 /**
  * If the card is new => read the id
- * 
+ *
  * If the card stays on the sensor it is in state HALT, therfore we cant read the card again.
  * PICC_WakeupA reactivates the card and sets it to state IDLE and can be read again.
- * 
+ *
  * If no chip is present there is nothing to wakeup => uid=null
-*/
+ */
 String RfidSensor::readUid()
 {
     if (mfrc522.PICC_IsNewCardPresent())
@@ -46,8 +46,8 @@ String RfidSensor::readUid()
         byte bufferSize = sizeof(bufferATQA);
 
         if (!mfrc522.PICC_WakeupA(bufferATQA, &bufferSize) == MFRC522::STATUS_OK)
-            uidString = "null";
+            uidString = "noID";
     }
-    
+
     return uidString;
 }
