@@ -17,10 +17,5 @@ void WeatherModule::update()
 
 String WeatherModule::getData()
 {
-  StaticJsonDocument<200> doc;
-  doc["temperature"] = temperature;
-  doc["humidity"] = humidity;
-  String json;
-  serializeJson(doc, json);
-  return json;
+  return String(temperature) + ";" + String(humidity);
 }

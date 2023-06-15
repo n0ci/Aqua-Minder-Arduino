@@ -16,9 +16,5 @@ void IdentityModule::update()
 
 String IdentityModule::getData()
 {
-  StaticJsonDocument<200> doc;
-  doc["uid"] = uid;
-  String json;
-  serializeJson(doc, json);
-  return json;
+  return uid;
 }
