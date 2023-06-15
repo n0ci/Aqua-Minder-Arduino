@@ -18,18 +18,11 @@ void WeightModule::tare()
 
 void WeightModule::update()
 {
-  float currentWeight = 0;
-  int iterations = 0; 
-
-  do 
+  float newWeight = hx711Sensor.readWeight();
+  if (newWeight > 0)
   {
-    currentWeight = hx711Sensor.readWeight();
-    delay(smoothTime);
-    iterations++;
+    weight = newWeight;
   }
-  while (abs(currentWeight - weight) > threshold && iterations <= maxSmoothIterations);
-  
-  weight = currentWeight;
 }
 
 String WeightModule::getData()

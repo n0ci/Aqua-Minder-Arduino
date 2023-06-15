@@ -40,3 +40,19 @@ void AquaMinder::notify(RequestType requestType)
         break;
     }
 }
+
+void AquaMinder::sendAllData()
+{
+    Serial.print(identityModule.getData());
+    Serial.print("/");
+    Serial.print(weatherModule.getData());
+    Serial.print("/");
+    Serial.println(weightModule.getData());
+}
+
+void AquaMinder::spam()
+{
+    Serial.println(identityModule.getData());
+    Serial.println(weatherModule.getData());
+    Serial.println(weightModule.getData());
+}

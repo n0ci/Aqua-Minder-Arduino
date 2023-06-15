@@ -26,6 +26,8 @@ public:
     void initializeModules();
     void update();
     void notify(RequestType requestType);
+    void spam();
+    void sendAllData();
 };
 
 #endif
